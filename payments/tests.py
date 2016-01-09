@@ -16,7 +16,7 @@ from .views import sign_in, sign_out
 
 class UserModelTest(TestCase):
 	@classmethod
-	def setUpClass(cls):
+	def setUpTestData(cls):
 		cls.test_user = User(email="a@b.com", name='test user')
 		cls.test_user.save()
 
@@ -42,7 +42,7 @@ class UserModelTest(TestCase):
 
 class FormTesterMixin():
 
-    def assertFormError(self, form_cls, expected_error_name,
+    def should_have_form_error(self, form_cls, expected_error_name,
                         expected_error_msg, data):
 
         from pprint import pformat
@@ -70,7 +70,7 @@ class FormTests(unittest.TestCase, FormTesterMixin):
         ]
 
         for invalid_data in invalid_data_list:
-            self.assertFormError(SigninForm,
+            self.should_have_form_error(SigninForm,
                                  invalid_data['error'][0],
                                  invalid_data['error'][1],
                                  invalid_data["data"])
@@ -118,7 +118,7 @@ class FormTests(unittest.TestCase, FormTesterMixin):
     			}
     		]
     		for invalid_data in invalid_data_list:
-    			self.assertFormError(
+    			self.should_have_form_error(
     				CardForm,
     				invalid_data['error'][0],
     				invalid_data['error'][1],
@@ -153,6 +153,7 @@ class SignInPageTests(TestCase, ViewTesterMixin):
 
 	@classmethod
 	def setUpClass(cls):
+		super(SignInPageTests, cls).setUpClass()
 		html = render_to_response(
 			'sign_in.html',
 			{
@@ -171,6 +172,7 @@ class SignOutPageTests(TestCase, ViewTesterMixin):
 
 	@classmethod
 	def setUpClass(cls):
+		super(SignOutPageTests, cls).setUpClass()
 		ViewTesterMixin.setupViewTester(
 			'/sign_out',
 			sign_out,
@@ -186,6 +188,7 @@ class RegisterPageTests(TestCase, ViewTesterMixin):
 
 	@classmethod
 	def setUpClass(cls):
+		super(RegisterPageTests, cls).setUpClass()
 		html = render_to_response(
 			'register.html',
 			{

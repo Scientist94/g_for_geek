@@ -7,6 +7,7 @@ class UserModelTest(TestCase):
 
 	@classmethod
 	def setUpClass(cls):
+		super(UserModelTest, cls).setUpClass()
 		ContactForm(email="test@test.com", name="test").save()
 		ContactForm(email="a@b.com", name="ab").save()
 		cls.firstUser = ContactForm(
