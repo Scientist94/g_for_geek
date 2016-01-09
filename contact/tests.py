@@ -1,5 +1,6 @@
-from django.test import TestCase
+from django.test import TestCase, SimpleTestCase
 from .models import ContactForm
+from .forms import ContactView
 from datetime import datetime, timedelta
 
 
@@ -7,6 +8,7 @@ class UserModelTest(TestCase):
 
 	@classmethod
 	def setUpClass(cls):
+		super(UserModelTest, cls).setUpClass()
 		ContactForm(email="test@test.com", name="test").save()
 		ContactForm(email="a@b.com", name="ab").save()
 		cls.firstUser = ContactForm(
@@ -22,5 +24,11 @@ class UserModelTest(TestCase):
 	def test_order(self):
 		contacts = ContactForm.objects.all()
 		self.assertEquals(self.firstUser, contacts[0])
+
+class ContactViewTests(SimpleTestCase):
+
+	def test_displayed_fields(self):
+		expected_fields = ['name', 'email', 'topic', 'message']
+		self.assertEquals(ContactView.Meta.fields, expected_fields)
 
 		
