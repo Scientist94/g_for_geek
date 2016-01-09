@@ -10,6 +10,8 @@ STRIPE_PUBLISHABLE = 'pk_test_IAtEr6NWSJi2rZyYOPCAkvT5'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
